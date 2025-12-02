@@ -18,8 +18,6 @@ This project builds surrogate models that predict the absorbed power of WEC arra
 | Perth_100  | LightGBM | 36,563.366 | 13,461.323 | 0.963700 | 0.1894           |
 | Sydney_100 | LightGBM | 14,271.181 | 6,180.880  | 0.979158 | 0.0862           |
 
-LightGBM with physics-informed features achieves the best performance across all datasets, with Sydney consistently outperforming Perth due to its smoother wave climate.
-
 # **Dataset Citation**
 
 > [Large-scale Wave Energy Farm - UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/882/large-scale+wave+energy+farm)

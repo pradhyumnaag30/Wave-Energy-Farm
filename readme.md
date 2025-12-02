@@ -36,7 +36,7 @@ For every layout, the dataset provides:
 
 * The **(X, Y)** coordinates of every WEC in the array
 * The **individual device absorbed power values** (`P1 … PN`)
-* The **total absorbed power** (`Total_Power`), computed via a high-fidelity hydrodynamic simulation. It `Total_Power` represents the sum of absorbed power across all devices (`P1 + P2 + … + PN`).
+* The **total absorbed power** (`Total_Power`), computed via a high-fidelity hydrodynamic simulation. It represents the sum of absorbed power across all devices (`P1 + P2 + … + PN`).
 
 The objective is to build a **surrogate model** that maps layout geometry to total absorbed power.
 

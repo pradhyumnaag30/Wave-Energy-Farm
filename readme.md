@@ -1,6 +1,8 @@
 # **Physics-Informed Surrogate Modeling for Large-Scale Wave Energy Farms**
 
-This project builds surrogate models that predict the absorbed power of WEC arrays directly from their spatial coordinates. Using high-fidelity simulations for 49- and 100-device layouts in both Perth and Sydney wave climates, the study evaluates baseline, advanced, and physics-informed ML models to identify the most reliable approach for predicting array performance from geometry alone.
+High-fidelity hydrodynamic simulations are essential for evaluating wave energy converter (WEC) array layouts, but they are extremely costly to run—especially as the number of devices grows. The dataset used in this project contains simulation-derived absorbed power values for 49- and 100-device layouts in both Perth and Sydney wave climates.
+
+This project uses that dataset to train machine-learning surrogate models that can predict absorbed power directly from the spatial coordinates of the array, without needing to rerun any simulations. By comparing baseline, advanced, and physics-informed models, the study identifies which approaches most accurately capture array interactions and provide a fast, reliable surrogate for layout evaluation and design-space exploration.
 
 # ⭐ **Results Summary**
 
@@ -34,7 +36,7 @@ For every layout, the dataset provides:
 
 * The **(X, Y)** coordinates of every WEC in the array
 * The **individual device absorbed power values** (`P1 … PN`)
-* The **total absorbed power** (`Total_Power`), computed via a high-fidelity hydrodynamic simulation. It represents the sum of absorbed power across all devices (`P1 + P2 + … + PN`).
+* The **total absorbed power** (`Total_Power`), computed via a high-fidelity hydrodynamic simulation. It `Total_Power` represents the sum of absorbed power across all devices (`P1 + P2 + … + PN`).
 
 The objective is to build a **surrogate model** that maps layout geometry to total absorbed power.
 
@@ -54,12 +56,14 @@ The paper highlights a critical physical distinction between the two environment
 
 These differences explain why identical ML models perform differently across regions.
 
+
 ### **Perth — Narrow Directional Spectrum**
 
 > *“Perth has a small sector from which the prevailing waves arrive… For Perth, this can result in very pronounced constructive and destructive interference.”*
 
 This leads to **strong WEC–WEC interactions**, sharp interference patterns, and a much more irregular response surface.
 As a result, the Perth dataset is **more nonlinear** and consistently **more challenging** for surrogate modeling.
+
 
 ### **Sydney — Broad Directional Spectrum**
 
@@ -75,6 +79,7 @@ While Sydney is easier at 49-WEC, the **100-WEC Sydney dataset becomes significa
 * Fewer samples than Perth’s 100-WEC dataset
 
 This combination increases model variance and reduces generalization strength, making context essential when interpreting results and benchmarking performance.
+
 # **Model Overview**
 
 This project evaluates three broad families of models to predict **total absorbed power** from WEC array geometries. All models use only the raw layout coordinates; no hydrodynamic parameters are included.
@@ -229,8 +234,6 @@ To better capture nonlinear hydrodynamic interactions, we evaluate several moder
 * **XGBoost**
 * **CatBoost**
 * **MLPRegressor**
-
-These models significantly outperform baselines, with **LightGBM** providing the strongest accuracy–speed tradeoff and emerging as the best overall performer across all four datasets.
 
 ### **Results of Advanced Models**
 
@@ -398,6 +401,8 @@ These models significantly outperform baselines, with **LightGBM** providing the
 </table>
 </div>
 
+These models significantly outperform the baselines. CatBoost achieves the strongest raw predictive performance in most cases (lower RMSE/MAE and higher R²), but its training time scales poorly with both feature count and dataset size. LightGBM delivers very similar predictive quality while training much faster and using less memory, making it the most practical and well-balanced choice across all four datasets.
+
 ## **3. Physics-Informed Surrogate Models**
 
 The absorbed power in a WEC array depends mainly on **how devices are spaced, oriented, and arranged** relative to each other.
@@ -425,10 +430,11 @@ A single feature capturing the overall footprint of the array.
 
 ### **Why These Features Are Useful**
 
-These features give the model direct information about the **geometry** and **relative positioning** of WECs—both of which strongly influence power absorption.
-They allow models like LightGBM to learn the underlying structure more effectively than raw coordinates alone.
+These physics-informed features encode the **spatial structure**, **relative spacing**, and **interaction-relevant geometry** of the WEC array—factors that strongly influence absorbed power. They provide the model with physically meaningful relationships that are difficult to infer from raw (x, y) coordinates alone.
 
-LightGBM with these physics-informed features is the **final surrogate model** used for both 49-WEC and 100-WEC datasets.
+Although **CatBoost** achieved the strongest raw predictive performance in the earlier model sweep, its training time scaled poorly as feature dimensionality increased. **LightGBM** offered nearly identical predictive quality while being significantly faster and more memory-efficient, especially when introducing the larger physics-informed feature set.
+
+For this reason, the physics-informed feature set was trained using LightGBM, which serves as the final surrogate model for both the 49-WEC and 100-WEC datasets.
 
 ### **Results of Physics-Informed Models**
 

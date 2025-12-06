@@ -4,6 +4,13 @@ High-fidelity hydrodynamic simulations are essential for evaluating wave energy 
 
 This project uses that dataset to train machine-learning surrogate models that can predict absorbed power directly from the spatial coordinates of the array, without needing to rerun any simulations. By comparing baseline, advanced, and physics-informed models, the study identifies which approaches most accurately capture array interactions and provide a fast, reliable surrogate for layout evaluation and design-space exploration.
 
+# **External Feedback**
+
+This project was shared with Associate Professor Markus Wagner, one of the original contributors to the Large-Scale Wave Energy Farm Dataset.
+He reviewed the results and provided the following feedback:
+
+*“These are great results, congratulations! We have found that building surrogates was very challenging. A physics-inspired approach seems indeed very reasonable. Nice!”*
+
 # ⭐ **Results Summary**
 
 ### **49-WEC Results**

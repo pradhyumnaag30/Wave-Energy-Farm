@@ -513,6 +513,24 @@ For this reason, the physics-informed feature set was trained using LightGBM, wh
 </table>
 </div>
 
+### **K-Fold Cross-Validation**
+
+To verify the robustness of the surrogate model, K-Fold cross-validation was performed. The resulting performance metrics were consistent with those obtained from a single train–test split, indicating that the model’s predictive accuracy is not sensitive to the choice of data partition.
+
+### **49-WEC 5-Fold Cross Validation Results**
+
+| Region    | Model    | RMSE       | MAE         | R²       | Relative MAE (%) |
+| --------- | -------- | ---------- | ---------   | -------- | -----------------|
+| Perth_49  | LightGBM | 20,897.964 | 8,935.5802  | 0.970946 | 0.2268           |
+| Sydney_49 | LightGBM | 4,196.7204 | 1,727.1067  | 0.996463 | 0.0428           |
+
+### **100-WEC 5-Fold Cross Validation Results**
+
+| Region     | Model    | RMSE       | MAE        | R²       | Relative MAE (%) |
+| ---------- | -------- | ---------- | ---------- | -------- | -----------------|
+| Perth_100  | LightGBM | 42,382.744 | 16,014.970 | 0.954046 | 0.2255           |
+| Sydney_100 | LightGBM | 18,635.669 | 8,063.922  | 0.968711 | 0.1125           |
+
 # **How to Use This Repository**
 
 ### **1. Install Dependencies**
